@@ -1,0 +1,39 @@
+{"t":"2026-10-01T18:38:35.324Z","txid":"[hash]","feeRate":100,"submitMs":1790879912682,"mempoolSec":1.261,"acceptedSec":2.642}
+{"t":"2026-10-01T18:43:35.671Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":192}
+{"t":"2026-10-01T18:48:22.644Z","txid":"[hash]","feeRate":111,"submitMs":1790880501269,"mempoolSec":null,"acceptedSec":1.375}
+{"t":"2026-10-01T18:51:57.565Z","txid":"[hash]","feeRate":100,"submitMs":1790880716183,"mempoolSec":null,"acceptedSec":1.382}
+{"t":"2026-10-01T18:57:00.138Z","txid":"[hash]","feeRate":100,"submitMs":1790881017503,"mempoolSec":1.208,"acceptedSec":2.635}
+{"t":"2026-10-01T18:59:22.010Z","txid":"[hash]","feeRate":100,"submitMs":1790881160331,"mempoolSec":null,"acceptedSec":1.679}
+{"t":"2026-10-01T19:04:22.341Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":100}
+{"t":"2026-10-01T19:09:23.274Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":100}
+{"t":"2026-10-01T19:14:27.964Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":194}
+{"t":"2026-10-01T19:19:28.281Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":194}
+{"t":"2026-10-01T19:24:28.488Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":196}
+{"t":"2026-10-01T19:28:48.922Z","txid":"[hash]","feeRate":196,"submitMs":1790882911512,"mempoolSec":1.268,"acceptedSec":17.41}
+{"t":"2026-10-01T19:33:37.103Z","txid":"[hash]","feeRate":194,"submitMs":1790883214360,"mempoolSec":1.935,"acceptedSec":2.743}
+{"t":"2026-10-01T19:35:26.058Z","txid":"[hash]","feeRate":195,"submitMs":1790883318118,"mempoolSec":1.434,"acceptedSec":7.94}
+{"t":"2026-10-01T19:40:33.294Z","txid":"[hash]","feeRate":197,"submitMs":1790883619670,"mempoolSec":1.339,"acceptedSec":13.624}
+{"t":"2026-10-01T19:45:34.103Z","txid":"[hash]","feeRate":196,"submitMs":1790883899484,"mempoolSec":1.232,"acceptedSec":34.619}
+{"t":"2026-10-01T19:50:40.793Z","txid":"[hash]","feeRate":201,"submitMs":1790884225859,"mempoolSec":1.395,"acceptedSec":14.934}
+{"t":"2026-10-01T19:55:46.686Z","txid":"[hash]","feeRate":256,"submitMs":1790884539738,"mempoolSec":1.38,"acceptedSec":6.948}
+{"t":"2026-10-01T19:56:51.174Z","txid":"[hash]","feeRate":307,"submitMs":1790884606461,"mempoolSec":1.235,"acceptedSec":4.713}
+{"t":"2026-10-01T19:58:04.397Z","txid":"[hash]","feeRate":343,"submitMs":1790884681175,"mempoolSec":1.24,"acceptedSec":3.222}
+{"t":"2026-10-01T19:59:34.875Z","txid":"[hash]","feeRate":197,"submitMs":1790884763391,"mempoolSec":1.711,"acceptedSec":11.484}
+{"t":"2026-10-01T20:02:54.795Z","txid":"[hash]","feeRate":271,"submitMs":1790884973228,"mempoolSec":null,"acceptedSec":1.567}
+{"t":"2026-10-01T20:03:58.813Z","txid":"[hash]","feeRate":272,"submitMs":1790885027196,"mempoolSec":1.23,"acceptedSec":11.617}
+{"t":"2026-10-01T20:08:39.145Z","txid":"[hash]","feeRate":425,"submitMs":1790885306114,"mempoolSec":1.384,"acceptedSec":13.031}
+{"t":"2026-10-01T20:12:53.363Z","txid":"[hash]","feeRate":325,"submitMs":1790885538501,"mempoolSec":5.826,"acceptedSec":34.862}
+{"t":"2026-10-01T20:16:21.635Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":421}
+{"t":"2026-10-01T20:19:56.099Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: output ([hash], 0) already spent by transaction 60cc301e054d1d395f","feeRate":1601}
+{"t":"2026-10-01T20:26:58.272Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":682}
+{"t":"2026-10-01T20:31:24.086Z","ev":"probe_reject","error":"RPC Server (remote error) -> WebSocket disconnected","feeRate":194}
+{"t":"2026-10-01T20:36:20.091Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":194}
+{"t":"2026-10-01T20:41:25.977Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":194}
+{"t":"2026-10-01T20:45:24.912Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":1235}
+{"t":"2026-10-01T20:48:20.583Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: output ([hash], 0) already spent by transaction 93a79f2e126dc9fe87","feeRate":100}
+{"t":"2026-10-01T20:52:54.907Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":100}
+{"t":"2026-10-01T20:58:07.424Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":197}
+{"t":"2026-10-01T21:03:32.749Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":440}
+{"t":"2026-10-01T21:09:23.390Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":329}
+{"t":"2026-10-01T21:13:23.226Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":190}
+{"t":"2026-10-01T21:18:22.051Z","ev":"probe_reject","error":"RPC Server (remote error) -> Rejected transaction [hash]: transaction [hash] is an orphan where orphan is disallowed","feeRate":197}

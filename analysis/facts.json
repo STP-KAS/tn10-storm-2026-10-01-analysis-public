@@ -1,0 +1,460 @@
+{
+  "generated_note": "Rebuilt by analysis/notebook.py from data/. Interim: samplers stop together just after 18:22Z.",
+  "coverage": {
+    "host": {
+      "n": 405,
+      "from": "2026-10-01T16:41:46Z (2026-10-01 18:41:46 CEST)",
+      "to": "2026-10-01T18:22:46Z (2026-10-01 20:22:46 CEST)"
+    },
+    "vcc": {
+      "n": 48414,
+      "from": "2026-10-01T16:41:31Z",
+      "to": "2026-10-01T18:22:56Z",
+      "sum_a": 36825
+    },
+    "watch": {
+      "n": 401,
+      "from": "2026-10-01T16:41:31Z (2026-10-01 18:41:31 CEST)",
+      "to": "2026-10-01T18:22:41Z (2026-10-01 20:22:41 CEST)"
+    },
+    "health": {
+      "n": 51,
+      "from": "2026-10-01T16:41:30.924Z",
+      "to": "2026-10-01T18:21:30.925Z"
+    },
+    "mined": {
+      "n": 20,
+      "from": "2026-10-01T16:51:06Z",
+      "to": "2026-10-01T18:21:13Z"
+    },
+    "fees": {
+      "from": "2026-10-01T20:12:14+0200",
+      "to": "2026-10-01T20:16:44+0200",
+      "n": 10,
+      "used": {
+        "300": 10
+      }
+    },
+    "runner_files": [],
+    "timeline_md": false
+  },
+  "vcc_vs_minute_hist": {
+    "minutes_compared": 101,
+    "exact_matches": 0,
+    "examples": [
+      {
+        "minute": "2026-10-01T16:41:00Z",
+        "hist": 28,
+        "vcc_a": 80,
+        "hist_n": 107,
+        "vcc_n": 107
+      },
+      {
+        "minute": "2026-10-01T16:42:00Z",
+        "hist": 62,
+        "vcc_a": 188,
+        "hist_n": 247,
+        "vcc_n": 247
+      },
+      {
+        "minute": "2026-10-01T16:43:00Z",
+        "hist": 47,
+        "vcc_a": 176,
+        "hist_n": 250,
+        "vcc_n": 250
+      },
+      {
+        "minute": "2026-10-01T18:20:00Z",
+        "hist": 266,
+        "vcc_a": 507,
+        "hist_n": 676,
+        "vcc_n": 676
+      },
+      {
+        "minute": "2026-10-01T18:21:00Z",
+        "hist": 266,
+        "vcc_a": 500,
+        "hist_n": 621,
+        "vcc_n": 621
+      }
+    ]
+  },
+  "throughput": {
+    "host_tx_processed_counter_delta": 642464,
+    "host_span_s": 6060.1,
+    "host_counter_avg_per_s": 106.015,
+    "host_sample_peak": 432.2,
+    "host_1min": {
+      "mean": 334.28,
+      "from": "2026-10-01T18:16:01Z",
+      "to": "2026-10-01T18:17:01Z",
+      "n": 5,
+      "span_s": 60.0
+    },
+    "host_10min": {
+      "mean": 163.2325,
+      "from": "2026-10-01T18:08:46Z",
+      "to": "2026-10-01T18:18:31Z",
+      "n": 40,
+      "span_s": 585.0
+    },
+    "host_1h": {
+      "mean": 116.3338,
+      "from": "2026-10-01T17:22:01Z",
+      "to": "2026-10-01T18:21:46Z",
+      "n": 240,
+      "span_s": 3585.1
+    },
+    "vcc_sum_a": 36825,
+    "vcc_avg_per_s": 6.0518,
+    "vcc_1min": {
+      "mean": 9.6167,
+      "from": "2026-10-01T18:13:51Z",
+      "to": "2026-10-01T18:14:51Z",
+      "n": 61,
+      "span_s": 60.0
+    },
+    "vcc_10min": {
+      "mean": 8.29,
+      "from": "2026-10-01T18:12:39Z",
+      "to": "2026-10-01T18:22:39Z",
+      "n": 600,
+      "span_s": 600.0
+    },
+    "vcc_1h": {
+      "mean": 7.2881,
+      "from": "2026-10-01T17:22:53Z",
+      "to": "2026-10-01T18:22:53Z",
+      "n": 3590,
+      "span_s": 3600.0
+    },
+    "phase_rates_tx_processed": {
+      "pre_prune": {
+        "from": "2026-10-01T16:41:46Z",
+        "to": "2026-10-01T17:04:46Z",
+        "tx_processed": 123985,
+        "span_s": 1380.0,
+        "per_s": 89.842
+      },
+      "prune": {
+        "from": "2026-10-01T17:05:01Z",
+        "to": "2026-10-01T18:09:46Z",
+        "tx_processed": 401489,
+        "span_s": 3885.1,
+        "per_s": 103.341
+      },
+      "after_prune": {
+        "from": "2026-10-01T18:10:01Z",
+        "to": "2026-10-01T18:22:46Z",
+        "tx_processed": 113893,
+        "span_s": 765.0,
+        "per_s": 148.878
+      },
+      "smoke_bump": {
+        "from": "2026-10-01T18:15:01Z",
+        "to": "2026-10-01T18:17:46Z",
+        "tx_processed": 46772,
+        "span_s": 165.0,
+        "per_s": 283.462
+      }
+    },
+    "processed_counter_note": "nodeTransactionsProcessedCount covers every transaction in every block body the node handled. host_sampler.mjs says this overcounts parallel blocks by about 1.337 (its round 7 comment). That factor is not re-measured here. This counter is not our submit count.",
+    "chain_blocks_per_s_median": 5.07,
+    "daa_per_s_median": 8.27,
+    "daa_per_s_min": 2.93,
+    "daa_per_s_max": 13.47
+  },
+  "phases": {
+    "why": {
+      "full": 143,
+      "prune-window": 258
+    },
+    "smx_rate": {
+      "1": 143,
+      "0.25": 258
+    },
+    "pause": {
+      "": 401
+    },
+    "reason": {
+      "": 401
+    },
+    "prune": {
+      "from": "2026-10-01T17:05:00Z (2026-10-01 19:05:00 CEST)",
+      "to": "2026-10-01T18:09:55Z (2026-10-01 20:09:55 CEST)",
+      "n": 258,
+      "from_iso": "2026-10-01T17:05:00Z",
+      "to_iso": "2026-10-01T18:09:55Z"
+    },
+    "full": {
+      "from": "2026-10-01T16:41:31Z (2026-10-01 18:41:31 CEST)",
+      "to": "2026-10-01T18:22:41Z (2026-10-01 20:22:41 CEST)",
+      "n": 143,
+      "from_iso": "2026-10-01T16:41:31Z",
+      "to_iso": "2026-10-01T18:22:41Z"
+    }
+  },
+  "health": {
+    "mempool_host_max": 216,
+    "mempool_host_min": 0,
+    "mempool_watch_max": 174,
+    "sink_age_max_s": 3.0,
+    "sink_age_median_s": 0.4,
+    "synced_false": 0,
+    "cpu_pct_max": 250,
+    "cpu_pct_median": 23,
+    "rss_mb_first": 386,
+    "rss_mb_last": 2165,
+    "rss_mb_max": 3206,
+    "load1_max": 7.1,
+    "load1_median": 1.54,
+    "tips_min": 1,
+    "tips_max": 10,
+    "disk_free_gb_first": 55.94,
+    "disk_free_gb_last": 55.57,
+    "disk_free_gb_min": 51.01,
+    "disk_net_used_gb": 0.37,
+    "disk_net_used_gb_per_hour": 0.2198,
+    "disk_regression_used_gb_per_hour": 0.9001,
+    "disk_note": "Free space dipped and recovered (pruning). The net first-to-last change is the figure to project. The regression is steeper because of that dip.",
+    "deep_reorg_events": 959,
+    "deep_reorg_removed_max": 8,
+    "deep_reorg_removed_median": 3,
+    "n0_version": "2.1.0",
+    "n0_utxoindex": false,
+    "polls": 609,
+    "poll_priority_feerate_set": [
+      100,
+      102.00355544251076
+    ],
+    "poll_normal_feerate_set": [
+      100,
+      101.48123133657349
+    ],
+    "poll_synced_false": 0,
+    "poll_mempool_max": 165
+  },
+  "share": {
+    "box": 0,
+    "desk": 14310,
+    "network": 34466,
+    "blocks": 48776,
+    "ours": 14310,
+    "ours_pct": 29.34,
+    "hourly": {
+      "2026-10-01T16:00Z": {
+        "box": 0,
+        "desk": 1277,
+        "network": 3901,
+        "blocks": 5178
+      },
+      "2026-10-01T17:00Z": {
+        "box": 0,
+        "desk": 8435,
+        "network": 20784,
+        "blocks": 29219
+      },
+      "2026-10-01T18:00Z": {
+        "box": 0,
+        "desk": 4598,
+        "network": 9781,
+        "blocks": 14379
+      }
+    }
+  },
+  "api": {
+    "http": {
+      "200": 50,
+      "null": 1
+    },
+    "stall_suspected_true": 0,
+    "accepted_tx_lag_s_min": 1,
+    "accepted_tx_lag_s_median": 3.0,
+    "accepted_tx_lag_s_max": 5,
+    "blue_score_diff_max": 518,
+    "latency_ms_median": 507.5,
+    "latency_ms_max": 15536,
+    "cf_cache": {
+      "MISS": 50,
+      "null": 1
+    },
+    "backend_versions": {
+      "2.0.1": 16,
+      "2.1.0": 34
+    },
+    "mined_stall_true": 0,
+    "mined_http": {
+      "200": 20
+    },
+    "mined_cf_cache": {
+      "MISS": 1,
+      "HIT": 1,
+      "EXPIRED": 18
+    },
+    "coinbase_lag_s_min": 3.0,
+    "coinbase_lag_s_median": 4.0,
+    "coinbase_lag_s_max": 11.4,
+    "api_tn10_rows": 21
+  },
+  "mass": {
+    "serialized_bytes": 264,
+    "compute_mass": 1624,
+    "transient_mass": 1056,
+    "transient_normalized": 528,
+    "fee_mass": 1624,
+    "storage_mass_at_example_output": 102,
+    "floor_fee_sompi": 162400,
+    "output_sompi_example": 40000000,
+    "fee_sompi_assumed_for_storage": 162400
+  },
+  "mainnet_capacity_tx_s": 3070,
+  "tx_per_block_compute": 307,
+  "fraction_of_mainnet_compute_at_processed_avg": 0.034533,
+  "vcc_a_is": "added selected-chain blocks per notification. It matches rpc minute.added. It is not an accepted-tx count. README's description of this file does not match the fields.",
+  "scenarios_measured": {
+    "A_floor_sustained": {
+      "10 min": {
+        "tx_s": 106.01497493863576,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 103.30099158020668,
+        "usd": 4.2673319388709485
+      },
+      "1 h": {
+        "tx_s": 106.01497493863576,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 3600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 619.8059494812401,
+        "usd": 25.60399163322569
+      },
+      "6 h": {
+        "tx_s": 106.01497493863576,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 21600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 3718.835696887441,
+        "usd": 153.62394979935416
+      },
+      "24 h": {
+        "tx_s": 106.01497493863576,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 86400,
+        "fee_sompi_per_tx": 162400,
+        "kas": 14875.342787549764,
+        "usd": 614.4957991974167
+      },
+      "7 d": {
+        "tx_s": 106.01497493863576,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 604800,
+        "fee_sompi_per_tx": 162400,
+        "kas": 104127.39951284834,
+        "usd": 4301.470594381916
+      }
+    },
+    "B_same_as_A": "Across 609 polls, priority feerate was 100 sompi/gram except one poll at 102.00 (2026-10-01T17:01:01Z, mempool 51). n0 mempool peaked at 216. No higher fee was required to get into a block during this slice."
+  },
+  "scenarios_design_not_measured": {
+    "low_1200": {
+      "10 min": {
+        "tx_s": 1200,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 1169.28,
+        "usd": 48.302594323200005
+      },
+      "1 h": {
+        "tx_s": 1200,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 3600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 7015.68,
+        "usd": 289.81556593920004
+      },
+      "6 h": {
+        "tx_s": 1200,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 21600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 42094.08,
+        "usd": 1738.8933956352002
+      },
+      "24 h": {
+        "tx_s": 1200,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 86400,
+        "fee_sompi_per_tx": 162400,
+        "kas": 168376.32,
+        "usd": 6955.573582540801
+      },
+      "7 d": {
+        "tx_s": 1200,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 604800,
+        "fee_sompi_per_tx": 162400,
+        "kas": 1178634.24,
+        "usd": 48689.0150777856
+      }
+    },
+    "high_2500": {
+      "10 min": {
+        "tx_s": 2500,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 2436.0,
+        "usd": 100.63040484000001
+      },
+      "1 h": {
+        "tx_s": 2500,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 3600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 14616.0,
+        "usd": 603.78242904
+      },
+      "6 h": {
+        "tx_s": 2500,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 21600,
+        "fee_sompi_per_tx": 162400,
+        "kas": 87696.0,
+        "usd": 3622.6945742400003
+      },
+      "24 h": {
+        "tx_s": 2500,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 86400,
+        "fee_sompi_per_tx": 162400,
+        "kas": 350784.0,
+        "usd": 14490.778296960001
+      },
+      "7 d": {
+        "tx_s": 2500,
+        "feerate_sompi_per_gram": 100,
+        "seconds": 604800,
+        "fee_sompi_per_tx": 162400,
+        "kas": 2455488.0,
+        "usd": 101435.44807872
+      }
+    },
+    "label": "README run-design target 1200-2500 tx/s. Not measured in data/."
+  },
+  "kas_usd": {
+    "price": 0.04130969,
+    "read": "2026-10-01T22:09:55Z",
+    "source": "https://api.coingecko.com/api/v3/simple/price?ids=kaspa&vs_currencies=usd&include_last_updated_at=true"
+  },
+  "round6_claim": {
+    "source": "https://github.com/STP-KAS/grok-bot-vprogs-round6 README headline, read 2026-10-01",
+    "submitted": 10117549,
+    "accepted": 10058024,
+    "window_min": 159,
+    "gusto_tx_s": 1191,
+    "whole_round_tx_s": 1057,
+    "note": "Those figures are that repo's report. This notebook does not re-sum round 6 logs."
+  }
+}

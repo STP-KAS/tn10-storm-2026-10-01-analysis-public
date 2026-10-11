@@ -1,0 +1,635 @@
+{
+ "schema": "box-summary v1",
+ "network": "testnet-10 (TN10) only",
+ "generated": "2026-10-02 CEST by Grok Bot (executor) on the box",
+ "time_zone_note": "All times are CEST (UTC+2) unless the key ends in _utc.",
+ "storm": {
+  "start": "2026-10-01 20:35:18",
+  "smoke": "2026-10-01 20:14:47-20:16:47",
+  "p2w_switch": "2026-10-01 21:42:37",
+  "storm_watch_stop": "2026-10-02 07:52:54",
+  "stp_end": "2026-10-02 08:43",
+  "runners_final_events": "2026-10-02 07:52:59-07:53:00"
+ },
+ "smoke": {
+  "tag": "SMX1",
+  "t0": "10-01 20:14:57",
+  "t1": "10-01 20:16:52",
+  "submitted": 12019,
+  "accepted": 12019,
+  "rejected": 0,
+  "fee_tkas": 63.405,
+  "lat_p50_ms": 1278,
+  "lat_p95_ms": 2465,
+  "final_lat": 1279,
+  "seconds": 125,
+  "source": "data/runner1.out segment 1 (final event)"
+ },
+ "totals": {
+  "submitted": 30001282,
+  "included_vcc": 29884172,
+  "rejected": 0,
+  "fee_tkas": 291966.976,
+  "funded": 64771,
+  "hops": 29936511,
+  "smx_submitted": 6818079,
+  "smx_included": 6760158,
+  "smx_fee": 70382.234,
+  "p2w_submitted": 23183203,
+  "p2w_included": 23124014,
+  "p2w_fee": 221584.743,
+  "unseen_by_runner_at_exit": 117110,
+  "errors": {},
+  "definition": "included_vcc = txs a runner saw accepted on n0's virtual chain (VCC) before that runner process exited; submitted = submitTransaction accepted into n0's mempool. Sum of final events of 32 storm runner segments (smoke excluded).",
+  "source": "data/runner1-4.out, data/p2w1-8.out (final events)"
+ },
+ "peaks_included_tps": {
+  "1min": {
+   "tps": 4248.5,
+   "from": "10-02 01:24:46",
+   "to": "10-02 01:25:46"
+  },
+  "10min": {
+   "tps": 3715.4,
+   "from": "10-02 01:16:11",
+   "to": "10-02 01:26:11"
+  },
+  "5min": {
+   "tps": 3841.4,
+   "from": "10-02 01:21:16",
+   "to": "10-02 01:26:16"
+  },
+  "60min": {
+   "tps": 1977.2,
+   "from": "10-01 22:12:46",
+   "to": "10-01 23:12:46"
+  },
+  "method": "per-runner cumulative accepted interpolated on a 5 s grid, summed, rolling window",
+  "source": "runner rep lines (every 10 s)"
+ },
+ "phases": [
+  {
+   "phase": "SMX ramp",
+   "start": "20:35:18",
+   "end": "20:53:30",
+   "secs": 1092,
+   "included": 548372,
+   "incl_tps": 502.2,
+   "mempool_acc_tps": 512.2,
+   "fee_tkas": 4624.6
+  },
+  {
+   "phase": "SMX steady (2-4 SMX runners)",
+   "start": "20:53:30",
+   "end": "21:42:37",
+   "secs": 2947,
+   "included": 4130083,
+   "incl_tps": 1401.5,
+   "mempool_acc_tps": 1413.6,
+   "fee_tkas": 41885.1
+  },
+  {
+   "phase": "P2W A: SMX+P2W mix, then 3-4 P2W, 3x float fee",
+   "start": "21:42:37",
+   "end": "23:13:34",
+   "secs": 5457,
+   "included": 10168351,
+   "incl_tps": 1863.4,
+   "mempool_acc_tps": 1874.6,
+   "fee_tkas": 70010.8
+  },
+  {
+   "phase": "pause: storm-watch RAM STOP + xfer",
+   "start": "23:13:34",
+   "end": "23:31:07",
+   "secs": 1053,
+   "included": 17390,
+   "incl_tps": 16.5,
+   "mempool_acc_tps": 7.7,
+   "fee_tkas": 45.9
+  },
+  {
+   "phase": "P2W B: 3->6 P2W, 3x float fee",
+   "start": "23:31:07",
+   "end": "00:10:41",
+   "secs": 2374,
+   "included": 5396429,
+   "incl_tps": 2273.1,
+   "mempool_acc_tps": 2273.9,
+   "fee_tkas": 37354.0
+  },
+  {
+   "phase": "pause: n0 rebuild with utxoindex",
+   "start": "00:10:41",
+   "end": "01:09:58",
+   "secs": 3557,
+   "included": 19997,
+   "incl_tps": 5.6,
+   "mempool_acc_tps": 5.1,
+   "fee_tkas": 369.9
+  },
+  {
+   "phase": "P2W C: 6-8 P2W, 30x fee (6000 sompi/g)",
+   "start": "01:09:58",
+   "end": "01:33:41",
+   "secs": 1423,
+   "included": 3451469,
+   "incl_tps": 2425.5,
+   "mempool_acc_tps": 2453.7,
+   "fee_tkas": 122319.8
+  },
+  {
+   "phase": "P2W D: 7 P2W, flat 2x fee, miners halted 01:31:50",
+   "start": "01:33:41",
+   "end": "06:45:53",
+   "secs": 18732,
+   "included": 5952320,
+   "incl_tps": 317.8,
+   "mempool_acc_tps": 319.5,
+   "fee_tkas": 14992.8
+  },
+  {
+   "phase": "RAM abort + disk<=25G self-pause",
+   "start": "06:45:53",
+   "end": "07:52:54",
+   "secs": 4021,
+   "included": 199756,
+   "incl_tps": 49.7,
+   "mempool_acc_tps": 36.3,
+   "fee_tkas": 364.2
+  },
+  {
+   "phase": "STOP (storm-watch) to stp end",
+   "start": "07:52:54",
+   "end": "08:43:00",
+   "secs": 3006,
+   "included": 0,
+   "incl_tps": 0.0,
+   "mempool_acc_tps": 0.0,
+   "fee_tkas": 0.0
+  }
+ ],
+ "hourly_included": [
+  {
+   "hour": "20:00",
+   "included": 931445,
+   "tps": 258.7,
+   "fee": 8405.2
+  },
+  {
+   "hour": "21:00",
+   "included": 5465669,
+   "tps": 1518.2,
+   "fee": 52341.8
+  },
+  {
+   "hour": "22:00",
+   "included": 6752022,
+   "tps": 1875.6,
+   "fee": 48070.6
+  },
+  {
+   "hour": "23:00",
+   "included": 5636914,
+   "tps": 1565.8,
+   "fee": 37331.7
+  },
+  {
+   "hour": "00:00",
+   "included": 1494571,
+   "tps": 415.2,
+   "fee": 8140.9
+  },
+  {
+   "hour": "01:00",
+   "included": 3736763,
+   "tps": 1038.0,
+   "fee": 123149.9
+  },
+  {
+   "hour": "02:00",
+   "included": 1000230,
+   "tps": 277.8,
+   "fee": 2543.0
+  },
+  {
+   "hour": "03:00",
+   "included": 1069629,
+   "tps": 297.1,
+   "fee": 2675.6
+  },
+  {
+   "hour": "04:00",
+   "included": 1080743,
+   "tps": 300.2,
+   "fee": 2693.0
+  },
+  {
+   "hour": "05:00",
+   "included": 1092789,
+   "tps": 303.6,
+   "fee": 2717.6
+  },
+  {
+   "hour": "06:00",
+   "included": 1607942,
+   "tps": 446.7,
+   "fee": 3897.7
+  },
+  {
+   "hour": "07:00",
+   "included": 15449,
+   "tps": 4.3,
+   "fee": 0.0
+  },
+  {
+   "hour": "08:00",
+   "included": 0,
+   "tps": 0.0,
+   "fee": 0.0
+  }
+ ],
+ "fees_tkas": {
+  "storm_runners": 291966.976,
+  "smoke": 63.405,
+  "fee_30x_window_01:09:58-01:33:41": 122319.8,
+  "transfers_to_qp4jge_fees": 12484.528,
+  "kns_runs_fees": 1873.696,
+  "kns_sweep_fees": 419.904,
+  "feerate_max_sompi_per_g": {
+   "value": 19244,
+   "at": "2026-10-01 23:56:53",
+   "normal_estimate": 6414.8,
+   "mult": 3
+  },
+  "node_normal_estimate_max": {
+   "value": 24144.8,
+   "priority": 203875.9,
+   "at": "2026-10-02 01:51:21"
+  },
+  "source": "runner final fee_tkas; data/feerate.jsonl; xfer/txids-2026-10-01.tsv; xfer/sent-gb1m-1002.jsonl; kns final-summary.json / blueprint*-summary.json"
+ },
+ "coinbase_inflow_tkas_estimate": {
+  "storm 20:35-07:53": 401422,
+  "20:35-01:33": 398565,
+  "01:33-07:53": 2858,
+  "caveat": "integrated from coinbase-feeder accepted_inflow_tkas_per_min ticks (data/feeder.log); feeder restarts/backfills may distort it; treat as an estimate. Inflow was ~0 after box miners stopped at 01:31:50."
+ },
+ "block_share_by_phase": {
+  "pre-storm 18:41-20:35": {
+   "blocks": 56841,
+   "box": 0,
+   "desk": 16883,
+   "network": 39958,
+   "box_pct": 0.0,
+   "desk_pct": 29.7,
+   "network_pct": 70.3,
+   "disk_first": 55.95,
+   "disk_last": 55.66,
+   "disk_gb_per_h": 0.15,
+   "ram_min": 6017,
+   "mempool_max": 216
+  },
+  "SMX 20:35-21:42": {
+   "blocks": 45910,
+   "box": 16040,
+   "desk": 10225,
+   "network": 19645,
+   "box_pct": 34.9,
+   "desk_pct": 22.3,
+   "network_pct": 42.8,
+   "disk_first": 55.66,
+   "disk_last": 53.92,
+   "disk_gb_per_h": 1.56,
+   "ram_min": 2263,
+   "mempool_max": 90658
+  },
+  "P2W A 21:42-23:13": {
+   "blocks": 54582,
+   "box": 33160,
+   "desk": 152,
+   "network": 21270,
+   "box_pct": 60.8,
+   "desk_pct": 0.3,
+   "network_pct": 39.0,
+   "disk_first": 53.8,
+   "disk_last": 46.96,
+   "disk_gb_per_h": 4.52,
+   "ram_min": 1059,
+   "mempool_max": 91376
+  },
+  "P2W B 23:31-00:10": {
+   "blocks": 23040,
+   "box": 13503,
+   "desk": 242,
+   "network": 9295,
+   "box_pct": 58.6,
+   "desk_pct": 1.1,
+   "network_pct": 40.3,
+   "disk_first": 46.5,
+   "disk_last": 43.36,
+   "disk_gb_per_h": 4.8,
+   "ram_min": 2030,
+   "mempool_max": 51237
+  },
+  "P2W C 01:09-01:33": {
+   "blocks": 12968,
+   "box": 6966,
+   "desk": 183,
+   "network": 5819,
+   "box_pct": 53.7,
+   "desk_pct": 1.4,
+   "network_pct": 44.9,
+   "disk_first": 33.74,
+   "disk_last": 31.35,
+   "disk_gb_per_h": 6.1,
+   "ram_min": 5080,
+   "mempool_max": 99346
+  },
+  "P2W D 01:33-06:45": {
+   "blocks": 176481,
+   "box": 0,
+   "desk": 1226,
+   "network": 175255,
+   "box_pct": 0.0,
+   "desk_pct": 0.7,
+   "network_pct": 99.3,
+   "disk_first": 31.49,
+   "disk_last": 24.79,
+   "disk_gb_per_h": 1.29,
+   "ram_min": 1367,
+   "mempool_max": 99992
+  },
+  "self-pause 06:45-07:52": {
+   "blocks": 39757,
+   "box": 0,
+   "desk": 163,
+   "network": 39594,
+   "box_pct": 0.0,
+   "desk_pct": 0.4,
+   "network_pct": 99.6,
+   "disk_first": 24.9,
+   "disk_last": 22.89,
+   "disk_gb_per_h": 1.81,
+   "ram_min": 1676,
+   "mempool_max": 65281
+  },
+  "after STOP 07:52-08:45": {
+   "blocks": 33332,
+   "box": 2050,
+   "desk": 0,
+   "network": 31282,
+   "box_pct": 6.2,
+   "desk_pct": 0.0,
+   "network_pct": 93.8,
+   "disk_first": 22.99,
+   "disk_last": 23.18,
+   "disk_gb_per_h": -0.22,
+   "ram_min": 1483,
+   "mempool_max": 104
+  },
+  "whole storm 20:35-07:52 (host gap 00:10-01:00)": {
+   "blocks": 371049,
+   "box": 80858,
+   "desk": 12191,
+   "network": 278000,
+   "box_pct": 21.8,
+   "desk_pct": 3.3,
+   "network_pct": 74.9,
+   "disk_first": 55.66,
+   "disk_last": 22.89,
+   "disk_gb_per_h": 2.9,
+   "ram_min": 1059,
+   "mempool_max": 99992
+  }
+ },
+ "block_share_note": "box = qzffl5 payout + 'stp grok bot' UA; desk = qzffl5 payout, other UA; network = any other payout. From data/host.jsonl share (n0 block-added). Host gap 2026-10-02 00:10:47-01:00:32.",
+ "host": {
+  "mempool_peak": [
+   99992,
+   "10-02 01:35:47"
+  ],
+  "disk_min": [
+   9.15,
+   "10-02 08:09:17"
+  ],
+  "ram_min": [
+   1059,
+   "10-01 23:13:32"
+  ],
+  "kaspad_rss_max": [
+   6448,
+   "10-02 08:11:32"
+  ],
+  "disk_start": [
+   55.54,
+   "10-01 20:00:01"
+  ],
+  "disk_end": [
+   23.18,
+   "10-02 08:45:32"
+  ],
+  "host_gaps": [
+   [
+    "10-02 00:10:47",
+    "10-02 01:00:32",
+    2985
+   ]
+  ],
+  "sinkAge": {
+   "n": 2600,
+   "max": 3.1,
+   "max_at": "10-02 06:42:14",
+   "median": 0.4,
+   "p99": 2.4,
+   "over5": 0,
+   "over2": 58
+  },
+  "rpc_polls": 4297,
+  "rpc_unsynced": 0,
+  "mempool_pause_samples": 145,
+  "prune_window_samples": 445,
+  "source": "data/host.jsonl, data/storm-watch.jsonl, data/tn10-n0-rpc.jsonl"
+ },
+ "guards_fired": [
+  {
+   "t": "2026-10-01 20:55:45 to 2026-10-02 02:24:59",
+   "guard": "storm-watch mempool>80k pause until <55k",
+   "count": "16 episodes, 145 samples"
+  },
+  {
+   "t": "2026-10-01 23:13:34",
+   "guard": "storm-watch STOP ram<1024MB",
+   "value_mb": 1009
+  },
+  {
+   "t": "2026-10-01 23:56:00 to 2026-10-02 06:46:27",
+   "guard": "feeder-guard RSS>1228MB restart",
+   "count": 10
+  },
+  {
+   "t": "2026-10-02 01:26:51",
+   "guard": "fee-float-guard 30x->3x (free float 373 TKAS)"
+  },
+  {
+   "t": "2026-10-02 01:33:27 to 06:28:33",
+   "guard": "scaler BREAK POINT (P2W8 dropped)",
+   "count": 8
+  },
+  {
+   "t": "2026-10-02 06:45:53",
+   "guard": "newest-guard HARD ABORT RAM 1367MB<1.5G x2 -> SIGTERM P2W7"
+  },
+  {
+   "t": "2026-10-02 06:45:08",
+   "guard": "runner disk<=25G self-pause (first, P2W1); all P2W1-7 by 06:46:04"
+  },
+  {
+   "t": "2026-10-02 06:49:41",
+   "guard": "scaler BACK OFF ram 1367MB -> drop P2W7"
+  },
+  {
+   "t": "2026-10-02 07:05",
+   "guard": "runner prune-hold + storm-watch prune-window rate 0.25"
+  },
+  {
+   "t": "2026-10-02 07:52:54",
+   "guard": "storm-watch STOP ram<1024MB",
+   "value_mb": 754
+  }
+ ],
+ "api": {
+  "mined_watch": {
+   "samples": 66,
+   "mined_stall_true": 9,
+   "stall_times": [
+    "2026-10-01 22:56",
+    "23:06",
+    "23:11",
+    "23:16",
+    "23:21",
+    "23:26 (timeout)",
+    "23:31",
+    "2026-10-02 00:01",
+    "00:06"
+   ],
+   "newest_coinbase_lag_s_max": 651.5,
+   "max_at": "2026-10-01 23:16",
+   "coverage_gap": "no samples 2026-10-02 00:10-08:45 (watcher stopped 00:10 with the pause; restart at 01:00:31 crashed on a host.jsonl start line); one final sample 08:45:15 lag 8.0 s",
+   "source": "data/api-mined-watch.jsonl"
+  },
+  "health": {
+   "samples": 398,
+   "stall_suspected": 48,
+   "stall_span": "2026-10-01 22:29:30 to 2026-10-02 01:30:31",
+   "http_503": 28,
+   "timeouts": 22,
+   "acceptedTxBlockTimeDiff_max_s": 704.4,
+   "max_at": "2026-10-01 23:19:30",
+   "source": "data/api-health-min.jsonl"
+  }
+ },
+ "outside_traffic_qp4jge": {
+  "address": "[address]",
+  "received_from_box_tkas": 1203035.146,
+  "received_txs": 4599,
+  "detail": {
+   "xfer_408": {
+    "tkas": 202682.69,
+    "fees": 836.878,
+    "window": "2026-10-01 23:19-2026-10-02 00:11",
+    "source": "xfer/txids-2026-10-01.tsv"
+   },
+   "gb1m_4191": {
+    "tkas": 1000352.456,
+    "fees": 11647.65,
+    "window": "2026-10-02 00:56:39-00:59:03",
+    "source": "xfer/sent-gb1m-1002.jsonl"
+   }
+  },
+  "api_tx_count": {
+   "value": 10659746,
+   "status": "attributed: api-tn10 transactions-count call logged at 2026-10-02 07:55:05 in public-api-calls.log; the response value is recorded in grok-build-tx-sender-2026-10-02.md and run/timeline.md (08:08), not in a raw response file"
+  },
+  "balance_after": {
+   "value": "~2.3-3.1 tKAS",
+   "status": "attributed (same source)"
+  },
+  "avg_tps_inference": "10,659,746 / (00:59 to 07:55 = 24,960 s) = ~427 tx/s; inference, count includes the inbound transfers"
+ },
+ "kns": {
+  "run1": {
+   "names": 9509,
+   "tx": 19018,
+   "failed": 0,
+   "stranded": 0,
+   "window": "21:46:39-21:53:59",
+   "peak_calendar_min": 3477,
+   "peak_rolling_60s": 3610,
+   "spend_tkas": 333721.094,
+   "fees_tkas": 906.094
+  },
+  "sweep": {
+   "txs": 513,
+   "in_tkas": 318974.36,
+   "fees_tkas": 260.153,
+   "window": "22:02:27-22:04:47"
+  },
+  "blueprint": {
+   "names": 8258,
+   "tx": 16516,
+   "failed": 0,
+   "window": "22:06:31-22:12:58",
+   "inclusion_p50_p90_s": [
+    7.591,
+    25.249
+   ]
+  },
+  "blueprint2": {
+   "names": 757,
+   "failed": 0,
+   "window": "22:21:50-22:26:45"
+  },
+  "total_names": 18524,
+  "indexer_ownership_verified": false,
+  "source": "[local path],blueprint,blueprint2}-2026-10-01/"
+ },
+ "prior_records": {
+  "round6_total_txs": "~10.1M",
+  "round6_sustained_tps": 1191,
+  "round4_peak_tps": 7652,
+  "round4_full_gusto3_avg": "4,568 (12 min) / 3,942 (17.5 min)",
+  "round4_included_claim": "~4,450 (tn ops2/stp; not found verbatim)",
+  "source": "grok-bot-vprogs-round6/README.md, stress-src/grok-bot-vprogs-round4/README.md, tn10-vprogs-stress-findings/README.md"
+ },
+ "latency_s_cumulative_per_runner": {
+  "definition": "submit -> seen accepted on n0 virtual chain; the engine's percentiles are cumulative over each runner process lifetime (r5-engine.mjs pstats over all accepted txs), so they cannot be cut cleanly by phase",
+  "smoke": {
+   "p50": 1.28,
+   "p95": 2.5
+  },
+  "smx_20:38-22:17": {
+   "p50": "3.47-3.65 (SMX1/2/4)",
+   "p95": "13.8-35.3",
+   "outlier": "SMX3 p50 84.2 p95 238.9"
+  },
+  "p2w_22:17-23:13": {
+   "p50": "2.73-3.79",
+   "p95": "12.7-21.1"
+  },
+  "p2w_23:31-00:10": {
+   "p50": "3.39-4.13",
+   "p95": "6.9-10.9"
+  },
+  "p2w_30x_01:10-01:33:30": {
+   "p50": "4.60-5.52",
+   "p95": "10.8-27.0",
+   "p2w8": "6.40/66.7"
+  },
+  "p2w_01:10-07:53_whole": {
+   "p50": "1.71-5.19",
+   "p95": "101.2-953.1"
+  },
+  "source": "last rep line of each segment in data/runner*.out and data/p2w*.out; value at 01:33:30 for the 30x window"
+ }
+}

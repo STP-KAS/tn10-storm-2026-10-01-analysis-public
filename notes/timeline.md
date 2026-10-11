@@ -1,0 +1,253 @@
+- 2026-10-01 20:35:18 CEST full storm start (LANES=1400 BASE_RATE=1500, FEE_MULT=3 floating), launched by tn ops2 after stp GO
+- 2026-10-01 20:38:30 CEST runners SMX1/SMX2 sending (25% ramp)
+- 2026-10-01 20:40 CEST stp: keep 3x normal floating (not pinned at 300); FEE_FIXED option added to smx-feerate.py but unused
+- 2026-10-01 20:40:30 CEST topup to LANES=2500 on stp 'full gusto'
+- 2026-10-01 21:03:33 CEST added runner3 SMX3 (600 lanes, rate 500, own ramp) to push past ~1.37k tx/s after box miners resumed 20:57 (TN10 ops); total target ~2,000 tx/s
+- 2026-10-01 21:24:51 CEST added runner4 SMX4 (600 lanes, rate 500) on stp 'scale up'; back off if acc tx/s flat or RAM avail <1.2G
+- 2026-10-01 21:33:53 CEST stopped runner4 pid 2264552 (SIGTERM, saves chains): 4 runners gave 1,364 acc/s vs 1,551 with 3 (mempool 80k pause cycling)
+- 2026-10-01 21:41:44 CEST built storm-p2w-runner.mjs (P2SH tag-wallet hops, stp approved 21:40); DRYRUN: fund 1,701 g (1 coinbase in, 1 P2SH out), hop 643 g unsigned 1-in-1-out, storage mass stays 643 g down to 0.3 TKAS (MIN)
+- 2026-10-01 21:41:44 CEST live verification P2WT: 1 lane, fund + 2 hops (--max-tx 3)
+- 2026-10-01 21:42:20 CEST SIGTERM runner3 SMX3 pid 2244632 (exact pid; saves chains) to make room for P2W1
+- 2026-10-01 21:42:37 CEST started P2W1 pid 2285512 (storm-p2w-runner.mjs, 600 lanes, base 500 tx/s, ramp 0.5->1 at 120 s, disk pause <=25 G, prune-window hold; live rate file /tmp/p2w-base-P2W1); storm.sh stop loop now includes p2w1..p2w4
+- 2026-10-01 21:53:15 CEST P2W1 healthy at 500 (21:44:45-21:52:45: 489 incl/s, 0 rejects, 643 g/hop, sinkAge max 0.8 s, RAM min 3.5 G; total storm incl 1,704/s) -> base raised to 1500 via /tmp/p2w-base-P2W1 (no restart)
+- 2026-10-01 21:59:45 CEST measured P2W1 @1500 (21:53:45-21:58:45): only 582 mempool-acc/s, 637 incl/s (lane/submit-bound, runner CPU ~10-15%), 0 rejects, 643 g/hop; SMX1+SMX2 fell 603->539 each; storm total incl 1,718/s (was 1,551 with SMX3); mempool avg 5k, blocks 87% compute-full -> inclusion no longer binding; submission throughput (~1.7-1.9k/s total) is. P2W1 left running at base 1500 for stp/TN10 ops decision.
+- 22:00 tn ops2: P2W1 lanes -> 1500 via /tmp/p2w-lanes-P2W1 (test whether submit throughput scales with in-flight)
+- 2026-10-01 22:00:12 CEST (user) P2W1 lanes 600 -> 1500 via /tmp/p2w-lanes-P2W1 (base 1500)
+- 2026-10-01 22:09:53 CEST step1 measured (22:01:00-22:09:30, P2W1 1500 lanes all funded): P2W1 586 incl/s (608 mempool-acc) = NO scaling vs 600 lanes; SMX1+SMX2 1,050; total 1,637 incl/s; mempool avg 6.9k max 49k; blocks 89% compute; sinkAge max 0.9; kaspad 113%; RAM min 3.4G; disk 4.7 GB/h. Finding: each runner process caps ~600-640 submits/s (round-4 workers also ~640/s each) -> per-connection/process ceiling
+- 2026-10-01 22:09:59 CEST SIGTERM SMX2 pid 2216681 (exact pid; saves chains)
+- 2026-10-01 22:10:09 CEST started P2W2 pid 2318501 (storm-p2w-runner.mjs, 1250 lanes, base 1500, ramp 0.5->1 @120 s; same O_EXCL claim dir + smx-used-seeds ledger as SMX1/P2W1; lane ids 0x50590000+)
+- 2026-10-01 22:16:47 CEST P2W2 window 22:12:15-22:16:15: mempool climbed 25k->93.7k (watch pause 12%, blocks 98% compute-full, 403 tx/block) -> inclusion binding again; interim safety: P2W2 base 1500->300 (lowering only). Next: closed-loop mempool taper in storm-p2w-runner.mjs, then SMX1->P2W3 (replaces ~1,740 g txs with 643 g)
+- 2026-10-01 22:17:08 CEST storm-p2w-runner.mjs v2 (backup run/storm-p2w-runner.mjs.v1): live closed-loop mempool taper via /tmp/p2w-pace ('30000 50000' written; full rate <=30k, linear to 0 at 50k; applies to runners started with v2). NOTE fee daemon now 2,401 sompi/g (3x normal, normal rose with mempool)
+- 2026-10-01 22:17:08 CEST SIGTERM SMX1 pid 2216680 (exact pid; saves chains)
+- 2026-10-01 22:17:19 CEST started P2W3 pid 2329301 (v2 runner, 1250 lanes, base 1500, pace on 30k-50k)
+- 2026-10-01 22:17:29 CEST SIGTERM P2W2 pid 2318501 to reload v2 (pacing); lanes resume from r5-chains-P2W2.json
+- 2026-10-01 22:17:38 CEST restarted P2W2 pid 2329723 (v2, 1250 lanes, base 1500, pace on)
+- 2026-10-01 22:17:38 CEST SIGTERM P2W1 pid 2285512 to reload v2 (pacing); lanes resume from r5-chains-P2W1.json
+- 2026-10-01 22:17:47 CEST restarted P2W1 pid 2329881 (v2, 1500 lanes, base 1500, pace on)
+- 2026-10-01 22:25:48 CEST measured 3xP2W v2 (22:20:15-22:25:35): 2,536 incl/s total (845/846/845), 0 rejects, mempool avg 1.4k max 6.5k, blocks 82% compute (501 tx/block), sinkAge max 0.6, kaspad 133%, RAM min 4.0G, disk 5.0 GB/h, feerate back to 581. Submit/latency-bound (~840/s per process)
+- 2026-10-01 22:25:48 CEST P2W2 + P2W3 lanes 1250 -> 2000 (/tmp/p2w-lanes-*)
+- 2026-10-01 22:31:50 CEST lanes 2000 result: pre-burst 22:26:40-22:29:15 total 2,095 incl/s (701/706/688) vs 2,536 at 1250 lanes -> more lanes per process does NOT help (per-process submit ~700-850/s). EXTERNAL burst from ~22:29:20: blocks full by STORAGE mass (422-461k) with 50-120 tx/block for ~40 s, then compute-full (498k) at ~307 tx/block (~1,620 g/tx = not our 643 g txs); no other senders on the box -> P2P-relayed external traffic; normal fee estimate up, our 3x floating feerate 581 -> 3,419 sompi/g; pace taper held our offered to ~0 at 58k mempool. Reverted P2W2/P2W3 lanes 2000 -> 1250 (lowering only). No P2W4 while inclusion-bound.
+- 2026-10-01 22:36:19 CEST external load still on (22:32-22:36: our incl ~196/s, blocks 498k compute-full, sink block sample 595 tx = 448 x 577 g no-payload (ours) + 146 x 1,633 g with 9-byte payload (external)); pace taper keeping mempool 35-59k; feerate 3x floating at 1,303-3,419. Holding at 3x P2W (no P2W4) until mempool <30k with blocks <90% full. Runners: P2W1 2329881 (1500 lanes), P2W2 2329723 (1250), P2W3 2329301 (1250), all base 1500, pace 30k-50k.
+- 2026-10-01 22:47:35 CEST storm-watch: 3x P2W healthy (~2.3k incl/s, 0 rejects, sinkAge 0.3, synced, disk ~49 G, RAM ~3.3 G, float ~98k ≈ inflow). External burst cleared ~22:39; last mp>30k 22:38, last compute-full 22:39. Holding P2W4 until ~10 m clean (mp<30k and blocks <90% compute).
+- 2026-10-01 22:59:02 CEST stp 22:58 'scale until ceiling'. Baseline 22:53:00-22:58:38 (3 runners): 2,011 incl/s, blocks 99% compute (527 tx/block), mempool avg 18.9k max 40k, sinkAge max 0.7, kaspad 153%, RAM min 2.6G (coinbase-feeder RSS 1.9G and growing), disk 49G. Block sample: external ~126 tx/block x ~1,630 g = 48% of block mass (not a clean window)
+- 2026-10-01 22:59:05 CEST started P2W4 pid 2372326 (v2, 1250 lanes, base 1500, pace 30k-50k)
+- 2026-10-01 23:07:23 CEST MEASURE 23:01:30-23:06:30 (4 runners, P2W1-P2W4): included 551/559/555/558 = 2,223 incl/s (+212 vs 2,011 baseline), 0 rejects; mempool avg 13.6k max 24.6k (below 30k pace band); blocks 497.2k compute = 99.4% full, 538 tx/block, our share of processed 64% (external ~102 tx/block x ~1,850 g); sinkAge max 0.9; kaspad 153% CPU, RSS 5.08G; RAM avail min 1,727 avg 2,100 MB; disk 47.55G, 5.68 GB/h; fee 2,459 TKAS/290 s (~30.5k TKAS/h) at feerate ~583.
+- 23:08 CEST STOP ADDING: RAM avail below the 2 G stop line (min 1.73G, avg 2.1G) and blocks 99.4% compute-full (each runner fell 669->555/s; P2W4's gain came mostly from displacing outside txs). P2W4 kept (+212/s, health fine). No P2W5.
+- 23:08 CEST RAM drift: coinbase-feeder pid 2214036 RSS 1.92G (22:58) -> 2.10G (23:03) -> 2.19G (23:07), ~+1.5 GB/h, cand map 138.8k growing; kaspad RSS 4.66->5.08G. At this rate RAM avail reaches 1.2G in ~30-45 min. Feeder NOT restarted (parent: separate 80k TKAS qzffl5 transfer job running 23:10-23:20 using the USED file). Recommend restarting feeder after the transfer (same cmd, frees ~2G).
+- 23:08 CEST started p2w4-guard pid 2382073: SIGTERMs P2W4 (exact pid 2372326, cmdline-verified) on RAM<1.2G x2 / sinkAge>10 / unsynced / P2W4 rejects +50; runs <=4 h; touches nothing else.
+- 2026-10-01 23:13:53 CEST p2w4-guard: P2W4 pid 2372326 gone, guard exits
+- 2026-10-01 23:13:34 CEST storm-watch STOP (ram<1024MB (1009)): P2W1-P2W4 + coinbase-feeder 2214036 halted cleanly (chain ends saved). RAM recovered to ~4.3G avail. (Correction: p2w4-guard real pid was 2382095, not 2382073; it exited 23:13:53.)
+- 23:18 CEST restart (stp): backed up all P2W chain files to [local path] (0600). P2W2/P2W3 live files hold 2000 ends; lanes 1250-1999 (750+750 ends, 2,997.5 + 2,937.6 TKAS) would drop out of the live file on the first 5-s save at --lanes 1250 -> copied to r5-chains-P2W{2,3}-EXTRA.json (0600) for later sweep/resume.
+- 2026-10-01 23:18:06 CEST removed STOP (copy run/STOP.2313) BEFORE feeder start: coinbase-feeder.mjs halts on STOP at its first interval tick (line 182) and STOPF is not configurable, so it cannot become healthy while STOP exists. No runners started until feeder healthy.
+- 2026-10-01 23:18:09 CEST started coinbase-feeder pid 2398277 (original cmd: DRYRUN=0 node coinbase-feeder.mjs --node ws://[ip] --maturity 1200 --backfill-chain 30000 --float-max 98000; env STORM_LIVE=1; log data/feeder.log + data/feeder.out; honours USED: loads run/smx-used-seeds.txt at start and re-reads it every 5-s tick)
+- 2026-10-01 23:19:27 CEST xfer (stp 23:07/23:08/23:09/23:18): swept idle SMX1/SMX1-RET/SMX2/SMX2-RET/SMX3/SMX3-RET/SMX4 chain ends (7,599 inputs, each signed with its own saved key; no running process had them open/loaded) -> [address]: 95 txs, 28,197.175 TKAS delivered, fee 81.408 TKAS at 900 sompi/g (3x r6 300); all 95 accepted on the virtual chain. Log xfer/sent-chains.jsonl. Scripts: xfer/xfer-send.mjs, xfer-mark.mjs, xfer-verify.mjs, spare-scan.mjs (read-only).
+- 2026-10-01 23:19:46 CEST xfer: swept P2WT test lane (P2SH, 1 input) -> same destination: 3.055 TKAS, fee 0.0147. Log xfer/sent-p2wt.jsonl.
+- NOTE 23:13:34 storm-watch STOP (ram<1024MB): contributing factor was the first xfer spare-scan run (bug: tracked every block input as a spend, RSS ~1 GB); killed 23:15, fixed (only qzffl5 candidates tracked) and re-run.
+- 2026-10-01 23:26 CEST xfer first 80k (qzffl5): spare-scan (read-only, 45k DAA window, vdaa 585581441) found 24,866 mature/accepted/unspent qzffl5 coinbases = 175,238 TKAS outside reserved file / USED / claims. Picked NEWEST 16,066 (daa 585554149-585580140, 80,331.10 TKAS), O_EXCL-claimed each in /tmp/smx-claims and appended all to run/smx-used-seeds.txt (44,191 -> 60,257 lines) BEFORE submit; 0 in reserved file. 23:26:39-23:26:42 submitted 201 txs (<=80 inputs, mass <=95,226), 80,005.233 TKAS delivered, fee 325.870 TKAS at 1,704 sompi/g (3x r6 568); 0 rejects; all 201 accepted on virtual chain. Log xfer/sent-qz80k-1.jsonl.
+- 2026-10-01 23:28:04 CEST xfer second 80k remainder (qzffl5): next-newest 3,098 coinbases (daa 585549045-585554149, 51,844.19 TKAS), claimed + USED first (60,257 -> 63,355 lines); 39 txs, 51,811.001 TKAS delivered, fee 33.190 at 900 sompi/g (3x r6 300, storm paused); 0 rejects; all 39 accepted on virtual chain. Log xfer/sent-qz80k-2.jsonl. Second 80k = 28,197.175 (SMX chains) + 3.055 (P2WT) + 51,811.001 = 80,011.231 TKAS, gap 0.
+- xfer totals: 336 txs, 160,016.464 TKAS to [address], fees 440.483 TKAS. Txid table xfer/txids-2026-10-01.tsv. Reserved 98k float never touched. Spare left (scan basis) ~43.06k TKAS (daa 585539882-585549045) + inflow. Net spare inflow before STOP ~+1.1-1.2k TKAS/min (feeder: inflow 1,585/min; storm fee burn ~520/min).
+- 2026-10-01 23:31:07 CEST restarted P2W1 pid 2413495 (v2, 1500 lanes resuming saved ends, base 1500, pace 30k-50k)
+- 2026-10-01 23:31:09 CEST restarted P2W2 pid 2413528 (v2, 1250 lanes resuming saved ends, base 1500, pace 30k-50k)
+- 2026-10-01 23:31:11 CEST restarted P2W3 pid 2413560 (v2, 1250 lanes resuming saved ends, base 1500, pace 30k-50k)
+- 2026-10-01 23:31:23 CEST feeder-guard: started (pid 2413941), limit 1228 MB, max 22 h
+- 2026-10-01 23:32:38 CEST runners live: P2W1/2/3 each ~750 tx/s submitted+VCC-accepted during ramp (0.5), 0 rejects, mempool ~0.1-1.3k, sinkAge 0.1, RAM avail 3.46G; feeder 2398277 still in 30000-chain backfill (started 23:18, much slower than the ~2 min at 18:35 under load), RSS 0.7-1.2G during backfill; old reserved file (19,410 entries / 98.0k TKAS) still served via claims + USED ledger.
+- 2026-10-01 23:33:23 CEST SIGTERM feeder-guard 2413941 (script being edited) and feeder 2398277 (30000-chain backfill still unfinished after 16 min under load, never ticked; parent/transfer-job advice: --backfill-chain 10000). Runners keep using the frozen 23:13:29 reserved file meanwhile (claims + USED ledger, 63.5k lines).
+- 2026-10-01 23:33:27 CEST started coinbase-feeder pid 2416394 (same cmd, --backfill-chain 10000)
+- 2026-10-01 23:33:27 CEST feeder-guard: started (pid 2416489), limit 1228 MB, max 22 h
+- 2026-10-01 23:37:19 CEST MEASURE 23:33:30-23:37:30 (P2W1-3 restarted): 666/664/671 = 2,001 incl/s, 0 rej; mempool avg 7.4k max 39k; blocks 428.6k = 86% compute, 465 tx/block; sinkAge max 0.8; kaspad 163% RSS 5.83G; RAM avail min 3.04G avg 3.69G; disk 46.1G (4.3 GB/h). stp 23:37: push to break point; loosened stop rules RAM 1.5G / sinkAge 5 s / disk 30G (storm-watch 1G STOP stays).
+- 2026-10-01 23:37:21 CEST restarted P2W4 pid 2420413 (v2, 1250 lanes resuming saved ends, base 1500, pace 30k-50k)
+- 2026-10-01 23:37:39 CEST started P2W4 pid 2420413 (resumes 1250 saved ends) + newest-guard(P2W4) pid 2420889 (hard aborts: RAM<1.2G x2, sinkAge>10, unsynced, rejects +50)
+- 2026-10-01 23:46:16 CEST MEASURE 23:40:00-23:45:00 (P2W1-4): 543/543/537/537 = 2,160 incl/s (+159 vs 2,001), 0 rej; mempool avg 3.0k max 16k; blocks 443k = 89% compute, 492 tx/block; sinkAge max 0.7; kaspad 137%; RAM avail min 3.07G avg 3.48G; feeder RSS 595->729MB (23:42->23:46, guard at 1.2G); CPU: 8 cores 0% idle but 63% is nice-19 miners, runners ~13% each (not CPU-bound). New feeder (10000 backfill) ticking since 23:42: emitted 6,619 / 35.7k TKAS.
+- 2026-10-01 23:46:18 CEST restarted P2W5 pid 2430447 (v2, 1250 lanes resuming saved ends, base 1500, pace 30k-50k)
+- 2026-10-01 23:46:32 CEST newest-guard moved P2W4 -> P2W5 (pid 2430703)
+- 2026-10-01 23:47:22 CEST storm-watch: 5x P2W healthy (~3.1k incl/s ramp with P2W5, 0 rejects, sinkAge/mp/synced 0.3 True 5784, disk 45.3 G, RAM 3.04 G avail, fee 3x float ~1.1–2.3k sompi/g, float ~38k growing inflow≫burn). Max runners; no action.
+- 2026-10-01 23:49:17 CEST xfer more-1 (stp 23:48 'as much as possible', '10 times tx fee'): restarted feeder pid 2416394 (--backfill-chain 10000) only sees DAA >= 585564664 (its backfill start_daa); reserved file 5,417 entries / 46.1k, DAA 585568217-585594616. Sent the remaining spare-scan1 coinbases (5,702, DAA 585539882-585549042, 43,062.62 TKAS; invisible to the feeder, not in reserved/USED/claims; claimed + appended to USED 68,063 -> 73,781 lines before submit): 72 txs, 42,666.226 TKAS delivered, fee 396.396 TKAS at 5,840 sompi/g (10x r6 584); 0 rejects; all 72 accepted on virtual chain. Log xfer/sent-more-1.jsonl. Nothing taken from the feeder-visible range (feeder float still filling).
+- 23:50 CEST xfer: started read-only spare-scan2.mjs over the old-float range DAA 585398000-585560000 (start hash = sampler sink @16:41Z), RAM watchdog kills it at avail <1.8G.
+- 2026-10-01 23:54:36 CEST MEASURE 23:48:30-23:53:30 (P2W1-5): 545/546/539/536/539 = 2,705 incl/s (+545 vs 2,160; NEW PEAK), 0 rej; mempool avg 1.4k max 4.2k; blocks 331k = 66% compute, 478 tx/block; sinkAge max 2.0 avg 0.42; kaspad 151% RSS 5.4G; RAM avail min 2.72G avg 3.02G (xfer spare-scan2 ~0.18G running); feeder RSS 1.15G; disk 44.8G (4.9 GB/h). -> add P2W6.
+- 2026-10-01 23:54:38 CEST restarted P2W6 pid 2441783 (v2, 1250 lanes resuming saved ends, base 1500, pace 30k-50k)
+- 2026-10-01 23:54:52 CEST newest-guard moved P2W5 -> P2W6 (pid 2441951)
+- 2026-10-01 23:56:00 CEST feeder-guard: feeder pid 2416394 RSS 1243 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-01 23:56:04 CEST feeder-guard: restarted feeder pid 2443862 (rss limit)
+- 2026-10-02 00:07:53 CEST MEASURE 23:57:00-00:02:00 (P2W1-6): 381/382/375/375/383/384 = 2,280 incl/s (-425 vs 2,705 with 5); 0 rej; mempool avg 9.9k max 51k; blocks 350k = 70% compute, 457 tx/block (block-mix 00:03: external only 16 tx/block, blocks 57% full); sinkAge max 0.9; kaspad 144%; RAM avail min 2.15G avg 2.93G. Confounder: feeder-guard restarted feeder 23:56 (RSS 1.24G) and its 10000-chain backfill ran 23:56-00:07:39 (698 s, heavy getBlocks/VC RPC on n0); xfer spare-scan2 also running. Re-measuring 6 runners after backfill.
+- 2026-10-02 00:09:59 CEST FEE 10x (stp 00:08 'no questions'): smx-feerate.py patched (backup run/smx-feerate.py.bak-0010): FEE_MULT range 1..10 -> 1..100 (old assert would have crashed at 30) + live override file /tmp/smx-feemult (re-read every 30-s loop; floor = mult x 100). SIGTERM old daemon pid 2213984; restarted pid 2461953 with FEE_MULT=30 STORM_LIVE=1 (same command); /tmp/smx-feemult=30; /tmp/r6-feerate now 5835 (was 582 at 3x).
+- 2026-10-02 00:10:34 CEST PAUSE (stp 00:09: TN10 ops rebuild n0 with --utxoindex): SIGTERM feeder-guard 2416489 and newest-guard(P2W6) 2441951 (exact pids); running STORM_LIVE=1 ./storm.sh stop.
+- 2026-10-02 00:07:46 CEST xfer: spare-scan2 (old-float range) killed by its RAM watchdog (avail 1,705 MB; scan RSS ~670 MB at DAA 585498215); no output. 00:08 restarted as segmented fresh-process scans (spare-scan3.mjs, run-segs.sh); 00:10 stopped all scans on stp 00:09 (storm pausing, n0 rebuild with utxoindex). No new batches started.
+- 2026-10-02 00:11 CEST xfer FINAL: 408 txs, 202,682.690 TKAS delivered to [address], fees 836.878 TKAS; all 408 re-verified accepted on the virtual chain at 00:11. Table: xfer/txids-2026-10-01.tsv. Unharvested: old-float qzffl5 coinbases DAA ~585398000-585539881 (invisible to the restarted feeders, est. tens of k TKAS, not in USED). Once n0 has utxoindex, use getUtxosByAddresses(qzffl5) minus reserved/USED/claims instead of block scans.
+- 2026-10-02 00:11:22 CEST STORM PAUSED (storm.sh stop 00:10:41): guards stopped first by exact pid (feeder-guard 2416489 + its idle subshell 2443860, newest-guard 2441951); storm.sh stop wrote STOP; P2W1-6 halted on STOP and saved chains (00:10:46-47); feeder 2443862 halted (00:10:44); fee daemon 2461953, storm-watch 2066105, health 2066104, host sampler 2066103, mined 2089627 and kit api/rpc samplers SIGTERMed. pgrep: no storm-p2w-runner / coinbase-feeder / r5-engine / storm guard / storm-watch / smx-feerate processes. STOP file left in place. Nothing submitted to n0 after this. Last window 00:07:45-00:10:40 (6 runners, feeder ticking, 30x fee from 00:09:55): 2,806 incl/s.
+- 2026-10-02 00:51:23 CEST INCIDENT (prep phase, storm STOPPED, nothing submitted): my read-only probe run/utxo-probe.py sent ONE getUtxosByAddresses([qzffl5]) on n0 json wRPC 18210 at 00:49:51. n0 stalled (log gap 00:50:08->00:50:22), the connection reset at 00:50:34 and the kernel OOM-killed kaspad pid 2471073 (anon-rss 9.46 GB, dmesg 'Out of memory: Killed process 2471073 (kaspad)'). No kaspad running at 00:51:16. Cause: qzffl5 holds a huge number of coinbase UTXOs, and the server-side response for one address exceeded RAM. n0 NOT restarted by me (TN10 ops' node). getUtxosByAddresses on qzffl5 must NOT be used for the feeder.
+- 2026-10-02 01:00:03 CEST GO (parent 00:59: TN10 ops 1M send done, n0 pid 2570127 synced with --utxoindex). Prepared offline: smx-feerate.py base cap (feerate = min(6000, mult x clamp(normal,100,200)); backup run/smx-feerate.py.bak-0100), run/fee-float-guard.py (3x <20k free float, 30x >60k), feeder state persistence (run/feeder-state.json, fast restarts; backup run/coinbase-feeder.mjs.bak-0100), run/storm-lib.sh + run/storm-go.sh + run/storm-scale.sh, newest-guard RAM back-off 1.5G, storm.sh stop kills scaler/guards first. Excluded xfer/sent-gb1m-1002.jsonl outpoints (DAA 580.9M-581.7M) cannot enter the feeder: its backfill window starts ~585.5M; USED/claims honoured as before. Removing STOP (copy run/STOP.0010).
+- 2026-10-02 01:00:31 CEST storm-go: LIVE restart begins (disk 30.5G, RAM 9263MB, n0 synced)
+- 2026-10-02 01:00:34 CEST storm-go: samplers + storm-watch up (smx-rate 1)
+- 2026-10-02 01:00:37 CEST started feeder pid 2610304: STORM_LIVE=1 DRYRUN=0 node [local path] --node ws://[ip] --maturity 1200 --backfill-chain 30000 --float-max 98000
+- 2026-10-02 01:09:44 CEST storm-go: feeder ticking: {"t":"2026-10-01T23:09:41.552Z","ev":"backfill","chain_blocks":30000,"state_loaded":0,"state_daa":"0","start_daa":"585575770","blocks":66240,"pages":269,"vc_chain_added":33666,"cand":50960,"accepted":
+- 2026-10-02 01:09:47 CEST started ffguard pid 2816483: python3 [local path]
+- 2026-10-02 01:09:53 CEST started feerate pid 2816608: STORM_LIVE=1 FEE_MULT=30 FEE_BASE_CAP=200 FEE_MAX=6000 python3 [local path]
+- 2026-10-02 01:09:53 CEST storm-go: fee mult 30 -> feerate 6000 sompi/g
+- 2026-10-02 01:09:53 CEST feeder-guard: started (pid 2816706), limit 1228 MB, max 22 h
+- 2026-10-02 01:09:58 CEST started P2W1 pid 2816770 (v2, 1500 lanes, base 1500, pace 30000 50000)
+- 2026-10-02 01:10:21 CEST started P2W2 pid 2817042 (v2, 1250 lanes, base 1500, pace 30000 50000)
+- 2026-10-02 01:10:44 CEST started P2W3 pid 2817402 (v2, 1250 lanes, base 1500, pace 30000 50000)
+- 2026-10-02 01:11:07 CEST started P2W4 pid 2817738 (v2, 1250 lanes, base 1500, pace 30000 50000)
+- 2026-10-02 01:11:30 CEST started P2W5 pid 2818105 (v2, 1250 lanes, base 1500, pace 30000 50000)
+- 2026-10-02 01:11:53 CEST started P2W6 pid 2818391 (v2, 1250 lanes, base 1500, pace 30000 50000)
+- 2026-10-02 01:12:16 CEST newest-guard -> P2W6 (pid 2818731)
+- 2026-10-02 01:12:16 CEST scaler: start (pid 2818790) N=6 MAXN=10 MIN_GAIN=100 cycle 420s, RAM>=1500MB sinkAge<=5s disk>=26G
+- 2026-10-02 01:12:18 CEST storm-go: DONE. runners P2W1..6, scaler pid 2818790
+- 2026-10-02 01:12:46 CEST storm running: P2W1-6 (pids 2816770 2817042 2817402 2817738 2818105 2818391 ), feeder 2610304 (30000 backfill 01:00:37-01:09:41), ffguard 2816483, feerate 2816608 (mult 30 -> 6000 sompi/g, capped), feeder-guard 2816706, newest-guard 2818731, scaler 2818790. Outside traffic fills blocks (block-mix 01:13: 244 ext tx/block ~1,635 g = 81% of mass; mempool 89-92k before our start, ~44k now) -> our runners pace-throttled to ~25% by the 30k-50k band. Raised /tmp/p2w-pace to 50000 75000 (below storm-watch 80k pause / engine 90k) so our 6000-sompi/g txs compete.
+- 2026-10-02 01:17:11 CEST FIRST WINDOW 01:14:00-01:17:00 (P2W1-6, 30x fee 6000 sompi/g, pace 50k-75k): 480/490/468/474/485/470 = 2,866 incl/s, 0 rejects, 0 fund_fail; blocks 488.9k = 98% compute, 604 tx/block avg (block-mix 01:17: 837 ours vs 9 ext per block, 97% of mass ours -> 30x fee displaced the outside txs); mempool avg 66k max 76k; sinkAge max 0.8; kaspad 166% RSS 2.2G; RAM avail min 6.5G; disk 33.1G at ~7 GB/h; burn 6,743 TKAS/min vs inflow ~1.6k/min, free float 97.9k -> ffguard expected to switch to 3x ~01:32.
+- 2026-10-02 01:18:55 CEST feeder-guard: feeder pid 2610304 RSS 1254 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 01:18:59 CEST feeder-guard: restarted feeder pid 2827169 (rss limit)
+- 2026-10-02 01:19:16 CEST scaler: N=6 incl 3375/s (best 0 @N=0) ramMin 6251MB sinkMax 0.8s disk 32.64G float 97900 TKAS fee 6000 phase scale
+- 2026-10-02 01:19:19 CEST started P2W7 pid 2827672 (v2, 1250 lanes, base 1500, pace 50000 75000)
+- 2026-10-02 01:19:21 CEST newest-guard -> P2W7 (pid 2827772)
+- 2026-10-02 01:26:22 CEST scaler: N=7 incl 3845/s (best 3375 @N=6) ramMin 5884MB sinkMax 0.7s disk 31.94G float 23340 TKAS fee 6000 phase scale
+- 2026-10-02 01:26:25 CEST started P2W8 pid 2834962 (v2, 1250 lanes, base 1500, pace 50000 75000)
+- 2026-10-02 01:26:27 CEST newest-guard -> P2W8 (pid 2835112)
+- 2026-10-02 01:26:51 CEST fee-float-guard: free float 373 TKAS (13 coins, reserved file 1 s old) -> /tmp/smx-feemult 30.0 -> 3
+- 2026-10-02 01:33:27 CEST scaler: N=8 incl 782/s (best 3845 @N=7) ramMin 5080MB sinkMax 1.2s disk 31.51G float 21250 TKAS fee 600 phase scale
+- 2026-10-02 01:33:27 CEST scaler: BREAK POINT: P2W8 gave 782 vs best 3845 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 01:33:27 CEST SIGTERM P2W8 pid 2834962 (exact)
+- 2026-10-02 01:33:29 CEST newest-guard -> P2W7 (pid 2843757)
+- 2026-10-02 01:33:41 CEST started ffguard pid 2844199: MULT_HI=2 MULT_LO=1 LOW_TKAS=2000 HIGH_TKAS=10000 python3 [local path]
+- 2026-10-02 01:33:41 CEST FEE flat 2x (stp 01:33): SIGTERM ffguard 2816483; /tmp/smx-feemult=2; ffguard restarted pid 2844199 holding 2x (drops to 1x only if free float <2k TKAS, back to 2x >10k; never 30x)
+- 2026-10-02 01:34:01 CEST feeder-guard: feeder pid 2827169 RSS 1229 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 01:34:05 CEST feeder-guard: restarted feeder pid 2844821 (rss limit)
+- 2026-10-02 01:35:04 CEST deep-scan A pid 2846236: low-hash 4c3237bf7594 stop-daa 585256000 -> [local path]
+- 2026-10-02 01:36:19 CEST deep-scan A done: {"ev":"scan","out":"[local path]","walked_chain":0,"blocks":43160,"vc_added":26748,"cand":39297,"accepted":25949,"spent":0,"used":0,"reserved":0,"claimed":0,"immature":0,"above_max":1377,"safe_n":24572,"safe_tkas":76224.76187442,"newest_daa":"585255999","oldest_daa":"585216110","vdaa":"585657447","reserved_newest_daa":"585656179","ms":70561}
+- 2026-10-02 01:40:30 CEST scaler: N=7 incl 37/s (best 3845 @N=7) ramMin 6105MB sinkMax 2.4s disk 31.27G float 27979 TKAS fee 400 phase hold
+- 2026-10-02 01:41:04 CEST deep-scan A (DAA 585,216,110-585,255,999, 10-01 ~13:10-14:17 CEST): 43,160 blocks in 70 s, scanner RSS <=184 MB; 24,572 safe coins 76.2k TKAS (0 spent in window, 0 USED/claimed/reserved). run/extra-reserve.json built (also excludes all xfer/sent-*.jsonl outpoints). Feeder patched (backup run/coinbase-feeder.mjs.bak-0140) to merge extra-reserve after its own coins under the 98k cap; SIGTERM feeder 2844821 (exact pid; state saved) -> feeder-guard restarts it with the new code.
+- 2026-10-02 01:44:09 CEST feeder-guard: restarted feeder pid 2855433 (feeder pid 2844821 not running, no STOP/HALT)
+- 2026-10-02 01:46:39 CEST FEEDING WORKS: feeder 2855433 (restart 40 s via state file) loaded extra-reserve 24,572 old coins -> emitted float 98.0k TKAS (2.1k own + 75.9k old, 98k cap; 76.2k total extra available). Miners halted 01:31:50 -> ~4.9 blocks/s (was ~9.5), blocks full (497.6k) and 91% outside mass at our flat 2x = 400 sompi/g -> included 437/s (01:40-01:43), mempool 70-83k (outside backlog), storm-watch pause 36% of the window; pace band set 45000 72000. Scaler BREAK POINT at 01:33 (P2W8 782/s) was the miner halt, not P2W8; holding N=7. Peak of the run: 3,845 incl/s with 7 runners 01:19-01:26 (30x fee, miners on). RAM avail 6.9G, kaspad RSS 3.1G, disk 31.2G.
+- 2026-10-02 01:47:30 CEST scaler: N=7 incl 146/s (best 3845 @N=7) ramMin 5983MB sinkMax 2.8s disk 31.07G float 98002 TKAS fee 393 phase hold
+- 2026-10-02 01:54:30 CEST scaler: N=7 incl 219/s (best 3845 @N=7) ramMin 6408MB sinkMax 2.2s disk 30.84G float 98002 TKAS fee 400 phase hold
+- 2026-10-02 02:01:31 CEST scaler: N=7 incl 298/s (best 3845 @N=7) ramMin 6213MB sinkMax 2.3s disk 30.76G float 98002 TKAS fee 392 phase hold
+- 2026-10-02 02:08:31 CEST scaler: N=7 incl 237/s (best 3845 @N=7) ramMin 6466MB sinkMax 1.4s disk 30.59G float 98002 TKAS fee 400 phase hold
+- 2026-10-02 02:08:31 CEST scaler: re-probe (baseline 237 @N=7)
+- 2026-10-02 02:08:34 CEST started P2W8 pid 2881199 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 02:08:36 CEST newest-guard -> P2W8 (pid 2881287)
+- 2026-10-02 02:15:37 CEST scaler: N=8 incl 209/s (best 237 @N=7) ramMin 6385MB sinkMax 1.3s disk 30.38G float 98002 TKAS fee 393 phase scale
+- 2026-10-02 02:15:37 CEST scaler: BREAK POINT: P2W8 gave 209 vs best 237 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 02:15:37 CEST SIGTERM P2W8 pid 2881199 (exact)
+- 2026-10-02 02:15:39 CEST newest-guard -> P2W7 (pid 2887884)
+- 2026-10-02 02:22:39 CEST scaler: N=7 incl 276/s (best 237 @N=7) ramMin 6386MB sinkMax 2.4s disk 30.12G float 98002 TKAS fee 394 phase hold
+- 2026-10-02 02:29:39 CEST scaler: N=7 incl 359/s (best 276 @N=7) ramMin 6388MB sinkMax 2.5s disk 29.88G float 98002 TKAS fee 394 phase hold
+- 2026-10-02 02:36:40 CEST scaler: N=7 incl 296/s (best 359 @N=7) ramMin 5942MB sinkMax 2.4s disk 29.73G float 98002 TKAS fee 391 phase hold
+- 2026-10-02 02:43:40 CEST scaler: N=7 incl 291/s (best 359 @N=7) ramMin 6077MB sinkMax 2.6s disk 29.59G float 98002 TKAS fee 390 phase hold
+- 2026-10-02 02:50:41 CEST scaler: N=7 incl 294/s (best 359 @N=7) ramMin 5416MB sinkMax 0.8s disk 29.48G float 98002 TKAS fee 391 phase hold
+- 2026-10-02 02:50:41 CEST scaler: re-probe (baseline 294 @N=7)
+- 2026-10-02 02:50:44 CEST started P2W8 pid 2923201 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 02:50:46 CEST newest-guard -> P2W8 (pid 2923293)
+- 2026-10-02 02:57:46 CEST scaler: N=8 incl 326/s (best 294 @N=7) ramMin 5320MB sinkMax 0.7s disk 29.13G float 98002 TKAS fee 391 phase scale
+- 2026-10-02 02:57:46 CEST scaler: BREAK POINT: P2W8 gave 326 vs best 294 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 02:57:46 CEST SIGTERM P2W8 pid 2923201 (exact)
+- 2026-10-02 02:57:48 CEST newest-guard -> P2W7 (pid 2930285)
+- 2026-10-02 03:04:48 CEST scaler: N=7 incl 272/s (best 294 @N=7) ramMin 5377MB sinkMax 2.3s disk 29.23G float 98001 TKAS fee 390 phase hold
+- 2026-10-02 03:10:44 CEST feeder-guard: feeder pid 2855433 RSS 1242 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 03:10:48 CEST feeder-guard: restarted feeder pid 2942610 (rss limit)
+- 2026-10-02 03:11:49 CEST scaler: N=7 incl 270/s (best 294 @N=7) ramMin 5248MB sinkMax 2.5s disk 28.93G float 98001 TKAS fee 390 phase hold
+- 2026-10-02 03:18:49 CEST scaler: N=7 incl 280/s (best 294 @N=7) ramMin 5692MB sinkMax 2.5s disk 29.06G float 98000 TKAS fee 389 phase hold
+- 2026-10-02 03:25:49 CEST scaler: N=7 incl 286/s (best 294 @N=7) ramMin 5727MB sinkMax 0.6s disk 28.81G float 98000 TKAS fee 388 phase hold
+- 2026-10-02 03:32:50 CEST scaler: N=7 incl 287/s (best 294 @N=7) ramMin 5526MB sinkMax 2.3s disk 28.94G float 98000 TKAS fee 388 phase hold
+- 2026-10-02 03:32:50 CEST scaler: re-probe (baseline 287 @N=7)
+- 2026-10-02 03:32:53 CEST started P2W8 pid 2965249 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 03:32:55 CEST newest-guard -> P2W8 (pid 2965343)
+- 2026-10-02 03:39:55 CEST scaler: N=8 incl 334/s (best 287 @N=7) ramMin 4833MB sinkMax 2.3s disk 28.83G float 97997 TKAS fee 388 phase scale
+- 2026-10-02 03:39:55 CEST scaler: BREAK POINT: P2W8 gave 334 vs best 287 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 03:39:55 CEST SIGTERM P2W8 pid 2965249 (exact)
+- 2026-10-02 03:39:57 CEST newest-guard -> P2W7 (pid 2972439)
+- 2026-10-02 03:46:58 CEST scaler: N=7 incl 297/s (best 287 @N=7) ramMin 5034MB sinkMax 2.3s disk 28.64G float 98002 TKAS fee 387 phase hold
+- 2026-10-02 03:47:50 CEST feeder-guard: feeder pid 2942610 RSS 1266 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 03:47:54 CEST feeder-guard: restarted feeder pid 2979874 (rss limit)
+- 2026-10-02 03:53:58 CEST scaler: N=7 incl 292/s (best 297 @N=7) ramMin 5816MB sinkMax 2.4s disk 28.62G float 98000 TKAS fee 387 phase hold
+- 2026-10-02 04:00:58 CEST scaler: N=7 incl 295/s (best 297 @N=7) ramMin 5591MB sinkMax 0.6s disk 28.56G float 97993 TKAS fee 387 phase hold
+- 2026-10-02 04:07:59 CEST scaler: N=7 incl 290/s (best 297 @N=7) ramMin 5063MB sinkMax 0.9s disk 28.49G float 98002 TKAS fee 387 phase hold
+- 2026-10-02 04:14:59 CEST scaler: N=7 incl 297/s (best 297 @N=7) ramMin 5014MB sinkMax 0.8s disk 28.16G float 97997 TKAS fee 386 phase hold
+- 2026-10-02 04:14:59 CEST scaler: re-probe (baseline 297 @N=7)
+- 2026-10-02 04:15:02 CEST started P2W8 pid 3008354 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 04:15:04 CEST newest-guard -> P2W8 (pid 3008425)
+- 2026-10-02 04:19:57 CEST feeder-guard: feeder pid 2979874 RSS 1234 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 04:20:01 CEST feeder-guard: restarted feeder pid 3013651 (rss limit)
+- 2026-10-02 04:22:04 CEST scaler: N=8 incl 343/s (best 297 @N=7) ramMin 5040MB sinkMax 0.7s disk 28.29G float 98001 TKAS fee 387 phase scale
+- 2026-10-02 04:22:04 CEST scaler: BREAK POINT: P2W8 gave 343 vs best 297 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 04:22:04 CEST SIGTERM P2W8 pid 3008354 (exact)
+- 2026-10-02 04:22:06 CEST newest-guard -> P2W7 (pid 3015624)
+- 2026-10-02 04:29:07 CEST scaler: N=7 incl 303/s (best 297 @N=7) ramMin 5579MB sinkMax 2.4s disk 28.19G float 98000 TKAS fee 388 phase hold
+- 2026-10-02 04:36:07 CEST scaler: N=7 incl 296/s (best 303 @N=7) ramMin 5500MB sinkMax 0.7s disk 28.03G float 98002 TKAS fee 389 phase hold
+- 2026-10-02 04:43:08 CEST scaler: N=7 incl 302/s (best 303 @N=7) ramMin 4991MB sinkMax 2.2s disk 27.95G float 98003 TKAS fee 389 phase hold
+- 2026-10-02 04:50:08 CEST scaler: N=7 incl 300/s (best 303 @N=7) ramMin 4801MB sinkMax 0.7s disk 27.72G float 98000 TKAS fee 387 phase hold
+- 2026-10-02 04:55:33 CEST feeder-guard: feeder pid 3013651 RSS 1250 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 04:55:37 CEST feeder-guard: restarted feeder pid 3050919 (rss limit)
+- 2026-10-02 04:57:08 CEST scaler: N=7 incl 299/s (best 303 @N=7) ramMin 4577MB sinkMax 0.6s disk 27.72G float 97996 TKAS fee 386 phase hold
+- 2026-10-02 04:57:08 CEST scaler: re-probe (baseline 299 @N=7)
+- 2026-10-02 04:57:11 CEST started P2W8 pid 3052332 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 04:57:13 CEST newest-guard -> P2W8 (pid 3052389)
+- 2026-10-02 05:04:14 CEST scaler: N=8 incl 342/s (best 299 @N=7) ramMin 5070MB sinkMax 1.0s disk 27.65G float 97997 TKAS fee 386 phase scale
+- 2026-10-02 05:04:14 CEST scaler: BREAK POINT: P2W8 gave 342 vs best 299 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 05:04:14 CEST SIGTERM P2W8 pid 3052332 (exact)
+- 2026-10-02 05:04:16 CEST newest-guard -> P2W7 (pid 3059511)
+- 2026-10-02 05:11:16 CEST scaler: N=7 incl 299/s (best 299 @N=7) ramMin 5213MB sinkMax 0.7s disk 27.36G float 98001 TKAS fee 386 phase hold
+- 2026-10-02 05:15:11 CEST deep-scan B pid 3072257: low-hash 1469970f5e30 stop-daa 585216110 -> [local path]
+- 2026-10-02 05:16:11 CEST deep-scan B done: {"ev":"scan","out":"[local path]","walked_chain":0,"blocks":43422,"vc_added":26729,"cand":39449,"accepted":25945,"spent":0,"used":54,"reserved":0,"claimed":0,"immature":0,"above_max":1273,"safe_n":24618,"safe_tkas":76604.76504931,"newest_daa":"585216109","oldest_daa":"585176111","vdaa":"585779864","reserved_newest_daa":"585255999","ms":55800}
+- 2026-10-02 05:16:11 CEST deep-scan B (window just below A): rebuilt extra-reserve via build-extra.py after scan
+- 2026-10-02 05:16:42 CEST feeder-guard: restarted feeder pid 3073574 (feeder pid 3050919 not running, no STOP/HALT)
+- 2026-10-02 05:17:44 CEST WATCH: extra-reserve had drained to 920 coins / 2.85k TKAS (under 20k) after USED rebuild; paged deep-scan B (DAA 585,176,111-585,216,109) low-hash 1469970f5e30 stop-daa 585216110: 43,422 blocks / 55.8 s, safe 24,618 coins 76.6k TKAS. build-extra.py -> extra-reserve 47,442 coins / 147.4k TKAS (A+B). SIGTERM feeder 3050919 (exact) so guard reload; feeder-guard restarted feeder pid 3073574; float refilled 29.9k -> 98.0k. Fee mult 2, N=7, n0 synced sinkAge<1s, disk ~27.4G, RAM avail ~5.6G. No hard-limit / no end.
+- 2026-10-02 05:18:17 CEST scaler: N=7 incl 296/s (best 299 @N=7) ramMin 4848MB sinkMax 0.7s disk 27.42G float 98000 TKAS fee 386 phase hold
+- 2026-10-02 05:25:17 CEST scaler: N=7 incl 289/s (best 299 @N=7) ramMin 5229MB sinkMax 1.1s disk 27.19G float 97994 TKAS fee 387 phase hold
+- 2026-10-02 05:32:17 CEST scaler: N=7 incl 291/s (best 299 @N=7) ramMin 5184MB sinkMax 0.9s disk 27.08G float 98001 TKAS fee 389 phase hold
+- 2026-10-02 05:39:18 CEST scaler: N=7 incl 298/s (best 299 @N=7) ramMin 4872MB sinkMax 0.9s disk 26.96G float 98002 TKAS fee 387 phase hold
+- 2026-10-02 05:39:18 CEST scaler: re-probe (baseline 298 @N=7)
+- 2026-10-02 05:39:21 CEST started P2W8 pid 3095439 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 05:39:23 CEST newest-guard -> P2W8 (pid 3095533)
+- 2026-10-02 05:46:23 CEST scaler: N=8 incl 335/s (best 298 @N=7) ramMin 4578MB sinkMax 2.3s disk 26.89G float 98001 TKAS fee 385 phase scale
+- 2026-10-02 05:46:23 CEST scaler: BREAK POINT: P2W8 gave 335 vs best 298 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 05:46:23 CEST SIGTERM P2W8 pid 3095439 (exact)
+- 2026-10-02 05:46:25 CEST newest-guard -> P2W7 (pid 3102620)
+- 2026-10-02 05:49:22 CEST WATCH: N=7 alive (P2W1-7) feeder/feerate/ffguard/scaler/newest-guard/feeder-guard ok; n0 synced sinkAge=0.3s; incl~302 tx/s (05:46-05:48 window, 0 rejects); mempool~71857; fee_mult=2 float~97996 TKAS; extra-reserve file 47442 coins / 147.4k TKAS (feeder extra_n=47264); RAM avail~4722MB disk~26.83G; last deep-scan B DAA 585176111-585216109; no paging (reserve>>20k, fund_fail=0); no hard-limit/STOP/end. NEED_TELL_STP=none
+- 2026-10-02 05:49:44 CEST feeder-guard: feeder pid 3073574 RSS 1285 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 05:49:48 CEST feeder-guard: restarted feeder pid 3106954 (rss limit)
+- 2026-10-02 05:53:26 CEST scaler: N=7 incl 291/s (best 298 @N=7) ramMin 4351MB sinkMax 0.6s disk 26.77G float 98001 TKAS fee 384 phase hold
+- 2026-10-02 06:00:26 CEST scaler: N=7 incl 297/s (best 298 @N=7) ramMin 5261MB sinkMax 0.8s disk 26.47G float 98000 TKAS fee 385 phase hold
+- 2026-10-02 06:07:27 CEST scaler: N=7 incl 291/s (best 298 @N=7) ramMin 4746MB sinkMax 2.3s disk 26.6G float 98003 TKAS fee 385 phase hold
+- 2026-10-02 06:14:27 CEST scaler: N=7 incl 293/s (best 298 @N=7) ramMin 4500MB sinkMax 1.0s disk 26.41G float 98001 TKAS fee 388 phase hold
+- 2026-10-02 06:21:28 CEST scaler: N=7 incl 294/s (best 298 @N=7) ramMin 4271MB sinkMax 0.5s disk 26.21G float 97994 TKAS fee 391 phase hold
+- 2026-10-02 06:21:28 CEST scaler: re-probe (baseline 294 @N=7)
+- 2026-10-02 06:21:31 CEST started P2W8 pid 3139372 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 06:21:33 CEST newest-guard -> P2W8 (pid 3139622)
+- 2026-10-02 06:22:47 CEST WATCH: runners_alive=8 tags=P2W1,P2W2,P2W3,P2W4,P2W5,P2W6,P2W7,P2W8 feeder/feerate/ffguard/scaler/newest-guard/feeder-guard ok; n0 pid 2570127 synced=True sinkAge=0.8s mempool=71704; scaler last incl 294/s (best 298 @N=7); fee_mult=2 float~98001 TKAS; extra-reserve file 47442 coins / 147.4k TKAS; RAM avail~4604MB disk~26.19G; last deep-scan B DAA 585176111-585216109; no paging (reserve>>20k, fund_fail=0); no hard-limit/STOP/end. NEED_TELL_STP=none NO_USER_STATUS
+- 2026-10-02 06:25:21 CEST feeder-guard: feeder pid 3106954 RSS 1269 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 06:25:25 CEST feeder-guard: restarted feeder pid 3145350 (rss limit)
+- 2026-10-02 06:28:33 CEST scaler: N=8 incl 341/s (best 294 @N=7) ramMin 4162MB sinkMax 0.8s disk 25.96G float 98000 TKAS fee 391 phase scale
+- 2026-10-02 06:28:33 CEST scaler: BREAK POINT: P2W8 gave 341 vs best 294 @N=7 (< +100) -> drop P2W8, HOLD at N=7
+- 2026-10-02 06:28:33 CEST SIGTERM P2W8 pid 3139372 (exact)
+- 2026-10-02 06:28:35 CEST newest-guard -> P2W7 (pid 3148655)
+- 2026-10-02 06:35:36 CEST scaler: N=7 incl 301/s (best 294 @N=7) ramMin 4668MB sinkMax 0.9s disk 25.78G float 98000 TKAS fee 390 phase hold
+- 2026-10-02 06:42:36 CEST scaler: N=7 incl 1801/s (best 301 @N=7) ramMin 3236MB sinkMax 3.1s disk 25.36G float 98000 TKAS fee 387 phase hold
+- 2026-10-02 06:45:53 CEST HARD ABORT (RAM avail 1367MB<1.5G x2): SIGTERM newest runner P2W7 pid 2827672 (newest-guard)
+- 2026-10-02 06:46:27 CEST feeder-guard: feeder pid 3145350 RSS 1253 MB > 1228 MB -> SIGTERM (exact pid)
+- 2026-10-02 06:46:31 CEST feeder-guard: restarted feeder pid 3166229 (rss limit)
+- 2026-10-02 06:49:36 CEST scaler: P2W7 not running (crash?) -> restart
+- 2026-10-02 06:49:39 CEST started P2W7 pid 3169398 (v2, 1250 lanes, base 1500, pace 45000 72000)
+- 2026-10-02 06:49:41 CEST newest-guard -> P2W7 (pid 3169453)
+- 2026-10-02 06:49:41 CEST scaler: N=7 incl 943/s (best 1801 @N=7) ramMin 1367MB sinkMax 0.8s disk 24.92G float 97990 TKAS fee 388 phase hold
+- 2026-10-02 06:49:41 CEST scaler: BACK OFF (ram 1367MB / sinkAge 0.8s) -> drop P2W7
+- 2026-10-02 06:49:41 CEST SIGTERM P2W7 pid 3169398 (exact)
+- 2026-10-02 06:49:43 CEST newest-guard -> P2W6 (pid 3169532)
+- 2026-10-02 06:51:18 CEST WATCH: N=6 alive (P2W1-6) P2W7 DEAD (scaler BACK OFF ramMin 1367MB @06:49 after 06:45 HARD ABORT); feeder/feerate/ffguard/scaler/newest-guard(P2W6)/feeder-guard ok; STOP absent; n0 pid 2570127 synced=True sinkAge=0.3s; incl~344 tx/s (P2W1-6 last 5m, rejects=0); mempool~47459; fee_mult=2 float~98000 TKAS; extra-reserve remaining 46784 coins / 145.4k TKAS; RAM avail~2482MB disk~24.80G (<=25G runners self-pause rate=0); last deep-scan B DAA 585176111-585216109; no paging (reserve>>20k, fund_fail=0); hard-limit RAM already applied (P2W7 killed); disk_25 flag; no end. NEED_TELL_STP=RAM kill P2W7 + disk<=25G pause
+- 2026-10-02 06:56:44 CEST scaler: N=6 incl 62/s (best 1801 @N=7) ramMin 2348MB sinkMax 2.7s disk 24.92G float 98000 TKAS fee 380 phase hold
+- 2026-10-02 07:03:44 CEST scaler: N=6 incl 25/s (best 1801 @N=7) ramMin 1988MB sinkMax 0.8s disk 24.87G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:10:45 CEST scaler: N=6 incl 13/s (best 1801 @N=7) ramMin 2118MB sinkMax 2.6s disk 24.75G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:12:51 CEST WATCH: N=6 alive (P2W1-6) rate=0 disk<=25G self-pause; feeder/feerate/ffguard/scaler/newest-guard(P2W6)/feeder-guard ok; STOP absent; n0 pid 2570127 synced=True sinkAge~0.3s; incl~10.5 tx/s (last 5m drain, rejects=0); mempool~3242; fee_mult=2 float~98000 TKAS; extra-reserve remaining 46784 coins / 145.4k TKAS (feeder extra_n=46784); RAM avail~2.4G disk~24.7G; last deep-scan B DAA 585176111-585216109; no paging (reserve>>20k, fund_fail=0); hard-limit disk25 already active (reported 06:51; no new kill); no end. NEED_TELL_STP=none (:10 silent)
+- 2026-10-02 07:17:45 CEST scaler: N=6 incl 5/s (best 1801 @N=7) ramMin 1676MB sinkMax 2.5s disk 24.71G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:24:46 CEST scaler: N=6 incl 2/s (best 1801 @N=7) ramMin 2222MB sinkMax 0.6s disk 24.56G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:24:46 CEST scaler: re-probe (baseline 2 @N=6)
+- 2026-10-02 07:24:46 CEST scaler: HOLD at N=6 (limit: disk 24.56G / float 98000 / ram 2222 / prune / MAXN)
+- 2026-10-02 07:31:46 CEST scaler: N=6 incl 1/s (best 2 @N=6) ramMin 2014MB sinkMax 0.9s disk 24.67G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:38:47 CEST scaler: N=6 incl 0/s (best 2 @N=6) ramMin 2009MB sinkMax 0.9s disk 24.36G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:45:47 CEST scaler: N=6 incl 0/s (best 2 @N=6) ramMin 2083MB sinkMax 0.8s disk 24.43G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:46:16 CEST WATCH: N=6 alive (P2W1-6) smx_rate=0.25 rate_why=prune-window (disk 24.4G<=25G self-pause); feeder/feerate/ffguard/scaler/newest-guard(P2W6)/feeder-guard ok; STOP absent; n0 pid 2570127 synced=True sinkAge~0.2s; storm incl~0 tx/s (p2w submit 0, scaler 0/s; network VCC ~8/s residual) rejects=0; mempool~18-70; fee_mult=2 float~98000 TKAS; extra-reserve remaining 46784 coins / 145.4k TKAS (feeder extra_n=46784); RAM avail~2.5G disk~24.4G; last deep-scan B DAA 585176111-585216109; no paging (reserve>>20k, fund_fail=0); disk25 already active (reported 06:51); no hard-limit kill / no end. NEED_TELL_STP=none (:43 silent)
+- 2026-10-02 07:52:47 CEST scaler: N=6 incl 0/s (best 2 @N=6) ramMin 1712MB sinkMax 1.2s disk 22.98G float 98000 TKAS fee 200 phase hold
+- 2026-10-02 07:53:02 CEST scaler: STOP present (ram<1024MB (754) @ 2026-10-02T07:52:54+02:00); waiting for manual removal
+- 2026-10-02 07:53:13 CEST newest-guard(P2W6): P2W6 pid 2818391 gone, guard exits
+- 2026-10-02 08:08 CEST (executor, Grok Build tx-sender prompt): NOTE 07:52:54 storm-watch STOP (ram<1024MB, 754) most likely caused by my read-only probe at 07:52:02-07:55 (node process pulled getMempoolEntriesByAddresses for qp4jge from public node vector-10 = ~145.8k entries, large RSS); killed ~07:55. Storm was already ~0 incl/s (prune-window/disk self-pause). STOP NOT removed by me. Findings: qp4jge confirmed balance ~2.3-3.1 tKAS; api-tn10 tx count 10,659,746; self-send storm from qp4jge (payload tag:0.xxx) since 00:59, fee spikes ~0.30 tKAS/tx ~02:00; ~145.8k qp4jge txs pending in vector-10 mempool. New prompt: artifacts/stress-tests/grok-build-tx-sender-2026-10-02.md (script build-storm.mjs). No tx submitted.
+- 2026-10-02 08:44:02 CEST STORM ENDED (stp 08:43 via Stress test bot). No runner/feeder was alive (storm-watch STOP 07:52:54 ram<1024MB had halted P2W1-6 + feeder; chains saved). SIGTERM by exact pid after cmdline check: storm-scale 2818790, storm-go.sh 2816606/2816704/2818788, feeder-guard 2816706, fee-float-guard 2844199, smx-feerate 2816608. storm.sh stop NOT run as-is because it also stops the samplers + storm-watch, which stp wants left running; its sender/guard part done manually. STOP kept. Still running: storm-watch 2609609, host_sampler 2609606, api_health_min 2609607, kit api_sampler 2609596 + rpc_sampler 2609598 (+ TN10 ops share-sampler 19447).
+- 2026-10-02 08:45 CEST (executor, final report) storm processes confirmed gone at 08:44:56 (pgrep: no storm-p2w-runner/storm-max-runner/storm-go.sh/storm-scale.sh/coinbase-feeder). 08:45:15 one final api_mined_watch --once sample (newest coinbase lag 8.0 s, mined_stall false). ~08:45:42 SIGTERM by exact pid (cmdline-verified): kit api_sampler 2609596, kit rpc_sampler 2609598, host_sampler 2609606 (host.pid), api_health_min 2609607 (health.pid), storm-watch.sh 2609609; mined.pid 2609608 already dead (crashed 01:00:31, data/mined.out). kaspad, n0-disk-watchdog.sh and share-sampler.py untouched; STOP file left in place. Final report: analysis/BOX-REPORT.md + analysis/box-summary.json in STP-KAS/tn10-storm-2026-10-01-analysis-public.
